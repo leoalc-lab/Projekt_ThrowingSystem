@@ -9,7 +9,7 @@ die Kugel soll passiv zurückgeführt werden.
 
 ## Team
 
-Wir sind 5 Personen. Die genauen Namen und Rollen werden hier ergänzt, sobald sie
+Wir sind 5 Personen. Die genauen Rollen werden hier ergänzt, sobald sie
 feststehen.
 
 ## Aufgaben
@@ -24,7 +24,7 @@ feststehen.
 * Roboterarm: UR10e
 * Greifer: Robotiq Hand-E (Paralleljaw Gripper)
 * Objekte: Kugeln (Sphere)
-* Fertigung: 3D-Drucker im MAIRo Lab
+* Fertigung: 3D-Drucker
 
 ## Software
 
