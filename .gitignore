@@ -1,0 +1,38 @@
+# Betriebssystem
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# CAD (Autodesk Fusion und ähnliche Programme)
+*.f3d
+*.f3z
+*.step
+*.stl
+*.obj
+*.3mf
+*.SLDPRT
+*.SLDASM
+
+# Temporäre und Build-Dateien
+*.tmp
+*.log
+*.bak
+*.swp
+__pycache__/
+*.pyc
+*.pyo
+build/
+dist/
+*.egg-info/
+
+# Große Binärdateien (optional, falls nicht versioniert werden sollen)
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# Editor- und IDE-Dateien
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
