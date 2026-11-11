@@ -1,7 +1,5 @@
 # Projektplan – MACH Wurfsystem
 
-Gantt-Chart zur Zeiterfassung und Dokumentation. GitHub rendert dieses Diagramm nativ (Mermaid). Bei Terminverschiebungen einfach die Daten anpassen, commiten und pushen.
-
 ```mermaid
 gantt
     title MACH Project: Wurfsystem – Projektplan
@@ -46,16 +44,7 @@ gantt
 | Erste Wurfversuche (ca. 1,5 m) | 2026-12-11 | Zielposition |
 | Projekt abgeschlossen (Optimierung) | 2026-12-18 | Erste Wurfversuche |
 
-## So nutzt du das im Repository
 
-1. Kopiere die Datei `PROJEKTPLAN.md` in den Hauptzweig deines Git-Repositories (z. B. `main` oder `dev`).
-2. Committe und pushe:
-   ```bash
-   git add PROJEKTPLAN.md
-   git commit -m "docs: Gantt-Chart für Wurfsystem-Projektplan hinzufügen"
-   git push origin main
-   ```
-3. Auf GitHub öffnest du die Datei – das Diagramm wird automatisch gerendert.
 
 ## Ergänzung: Tagesaktuelle Aufgabenverfolgung
 
@@ -67,5 +56,3 @@ Der Mermaid-Gantt-Chart eignet sich gut für den groben Projektplan. Für die t�
 - In der Timeline-Ansicht von GitHub Projects siehst du dann eine Gantt-ähnliche Ansicht mit den tatsächlichen Issue-Daten.
 
 Die beiden Ansätze ergänzen sich: `PROJEKTPLAN.md` für den festen Plan im Git-Verlauf, GitHub Issues/Projects für die laufende Erfassung.
-
-Die geplanten Daten sind ab heute (11.11.2026) beispielhaft gesetzt – passe sie an euren tatsächlichen Projektstart und die Laborverfügbarkeit im MAIRo Lab an.
