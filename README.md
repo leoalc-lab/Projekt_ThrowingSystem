@@ -9,8 +9,8 @@ die Kugel soll passiv zurückgeführt werden.
 
 ## Team
 
-Wir sind 5 Personen. Die genauen Rollen werden hier ergänzt, sobald sie
-feststehen.
+Tom, Leo & Alex: Wurfmechanismus     - Wurfbewegung und git doku
+Lukas & Anna:    Rückführmechanismus - CAD und 3D-Druck
 
 ## Aufgaben
 
@@ -29,7 +29,7 @@ feststehen.
 ## Software
 
 * CAD: Autodesk Fusion
-* Roboterprogrammierung: Teach Pendant oder ROS2
+* Roboterprogrammierung: Teach Pendant (oder ROS2)
 
 ## Ordnerstruktur (vorläufig)
 
