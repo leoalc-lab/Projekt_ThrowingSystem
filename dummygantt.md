@@ -1,3 +1,4 @@
+```mermaid
 gantt
     title Projektplan Template – Kategorien mit Subtasks
     dateFormat  YYYY-MM-DD
@@ -20,3 +21,4 @@ gantt
     Interner Test               :t1a, 2026-12-11, 4d
     Externer Test               :t1b, after t1a, 3d
     Produktion freigeben        :t1c, after t1b, 3d
+```
