@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>MACH Wurfsystem - Projektplan</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 28px; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: #f6f7f9; color: #1f2430; }
+  .scroller { overflow-x: auto; }
+  .chart { background: #fff; border: 1px solid #e2e5ea; border-radius: 10px; padding: 16px 16px 12px; box-shadow: 0 1px 3px rgba(20,30,50,.05); position: relative; overflow: hidden; min-width: 980px; }
+  .axis { display: grid; grid-template-columns: 170px repeat(13, 1fr); font-size: 10px; color: #5b6472; padding: 4px 0; }
+  .axis .cell:first-child { text-align: left; color: #3c4350; font-size: 12px; border-left: none; }
+  .axis .cell { text-align: center; border-left: 1px solid #eef1f4; padding: 0 4px; }
+  .axis-top { font-weight: 600; color: #3c4350; border-bottom: 1px solid #d7dbe1; margin-bottom: 10px; }
+  .axis-bottom { border-top: 1px solid #d7dbe1; margin-top: -2px; }
+  .row { display: grid; grid-template-columns: 170px repeat(13, 1fr); align-items: center; min-height: 30px; gap: 0; }
+  .row.cat { min-height: 36px; }
+  .label { padding-right: 8px; font-size: 13px; }
+  .label.cat { font-weight: 600; }
+  .label.sub { font-size: 12px; color: #4a5261; padding-left: 12px; }
+  .bar { height: 15px; border-radius: 4px; }
+  .bar.cat { height: 22px; border-radius: 5px; }
+  .today { position: absolute; top: 34px; bottom: 34px; width: 2px; background: #d64545; z-index: 3; pointer-events: none; }
+  .today span { position: absolute; top: -14px; left: -46px; font-size: 10px; color: #d64545; font-weight: 600; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap" style="max-width:none;">
+  <div class="scroller">
+    <div class="chart">
+      <div class="axis axis-top"><div class="cell"></div><div class="cell">W0</div><div class="cell">W1</div><div class="cell">W2</div><div class="cell">W3</div><div class="cell">W4</div><div class="cell">W5</div><div class="cell">W6</div><div class="cell">W7</div><div class="cell">W8</div><div class="cell">W9</div><div class="cell">W10</div><div class="cell">W11</div><div class="cell">W12</div></div>
+
+      <div class="row cat"><div class="label cat">1. Setup &amp; Einarbeitung</div><div class="bar cat" style="grid-column:2 / 4;background:#6b7fa8"></div></div>
+      <div class="row sub"><div class="label sub">Git Setup</div><div class="bar sub" style="grid-column:2 / 3;background:#9aa9c6"></div></div>
+      <div class="row sub"><div class="label sub">URSim Setup</div><div class="bar sub" style="grid-column:2 / 4;background:#9aa9c6"></div></div>
+      <div class="row sub"><div class="label sub">Erste Versuche in URSim</div><div class="bar sub" style="grid-column:3 / 5;background:#9aa9c6"></div></div>
+
+      <div class="row cat"><div class="label cat">2. Physischer Roboter</div><div class="bar cat" style="grid-column:4 / 6;background:#4f8a8b"></div></div>
+      <div class="row sub"><div class="label sub">Inbetriebnahme am Roboter</div><div class="bar sub" style="grid-column:4 / 5;background:#88b4b5"></div></div>
+      <div class="row sub"><div class="label sub">Erste Versuche am Roboter</div><div class="bar sub" style="grid-column:5 / 6;background:#88b4b5"></div></div>
+
+      <div class="row cat"><div class="label cat">3. Wurfbewegung</div><div class="bar cat" style="grid-column:5 / 9;background:#8a6a91"></div></div>
+      <div class="row sub"><div class="label sub">Wurfbewegung festlegen</div><div class="bar sub" style="grid-column:5 / 7;background:#b39ab8"></div></div>
+      <div class="row sub"><div class="label sub">Ball Aufnahme / Loslassen (Timing)</div><div class="bar sub" style="grid-column:6 / 8;background:#b39ab8"></div></div>
+      <div class="row sub"><div class="label sub">Zielposition festlegen (Austausch)</div><div class="bar sub" style="grid-column:7 / 9;background:#b39ab8"></div></div>
+
+      <div class="row cat"><div class="label cat">4. Test &amp; Optimierung</div><div class="bar cat" style="grid-column:9 / 15;background:#b8894a"></div></div>
+      <div class="row sub"><div class="label sub">Erste Wurfversuche (ca. 1,5 m)</div><div class="bar sub" style="grid-column:9 / 12;background:#d4b184"></div></div>
+      <div class="row sub"><div class="label sub">Optimierung</div><div class="bar sub" style="grid-column:11 / 15;background:#d4b184"></div></div>
+      <div class="row sub"><div class="label sub">Finale Dokumentation &amp; Abgabe</div><div class="bar sub" style="grid-column:12 / 15;background:#d4b184"></div></div>
+
+      <div class="axis axis-bottom"><div class="cell"></div><div class="cell">28.10.</div><div class="cell">04.11.</div><div class="cell">11.11.</div><div class="cell">18.11.</div><div class="cell">25.11.</div><div class="cell">02.12.</div><div class="cell">09.12.</div><div class="cell">16.12.</div><div class="cell">23.12.</div><div class="cell">30.12.</div><div class="cell">06.01.</div><div class="cell">13.01.</div><div class="cell">20.01.</div></div>
+
+      <div class="today" id="today"><span>heute</span></div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("today").style.left = 'calc(170px + ((100% - 170px) * (19 / 91)))';
+  </script>
+</div>
+</body>
+</html>
