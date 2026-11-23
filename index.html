@@ -2,61 +2,178 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>MACH Wurfsystem - Projektplan</title>
+<title>MACH Projektplan - Wurfmechanismus &amp; CAD/Druck</title>
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }
   body { margin: 0; padding: 28px; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: #f6f7f9; color: #1f2430; }
   .scroller { overflow-x: auto; }
-  .chart { background: #fff; border: 1px solid #e2e5ea; border-radius: 10px; padding: 16px 16px 12px; box-shadow: 0 1px 3px rgba(20,30,50,.05); position: relative; overflow: hidden; min-width: 980px; }
-  .axis { display: grid; grid-template-columns: 170px repeat(13, 1fr); font-size: 10px; color: #5b6472; padding: 4px 0; }
-  .axis .cell:first-child { text-align: left; color: #3c4350; font-size: 12px; border-left: none; }
+  .chart { background: #fff; border: 1px solid #e2e5ea; border-radius: 10px; padding: 16px 16px 12px; box-shadow: 0 1px 3px rgba(20,30,50,.05); min-width: 1020px; }
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #eef1f4; font-size: 12px; color: #3c4350; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .swatches { display: flex; gap: 3px; }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .chart-body { position: relative; overflow: hidden; }
+  .axis { display: grid; grid-template-columns: 210px repeat(12, 1fr); font-size: 10px; color: #5b6472; padding: 4px 0; position: relative; z-index: 2; }
+  .axis .cell:first-child { text-align: left; color: #3c4350; font-size: 12px; border-left: none; padding-left: 0; }
   .axis .cell { text-align: center; border-left: 1px solid #eef1f4; padding: 0 4px; }
-  .axis-top { font-weight: 600; color: #3c4350; border-bottom: 1px solid #d7dbe1; margin-bottom: 10px; }
-  .axis-bottom { border-top: 1px solid #d7dbe1; margin-top: -2px; }
-  .row { display: grid; grid-template-columns: 170px repeat(13, 1fr); align-items: center; min-height: 30px; gap: 0; }
-  .row.cat { min-height: 36px; }
-  .label { padding-right: 8px; font-size: 13px; }
+  .axis-top { font-weight: 600; color: #3c4350; border-bottom: 1px solid #d7dbe1; margin-bottom: 8px; }
+  .axis-bottom { border-top: 1px solid #d7dbe1; margin-top: 6px; }
+  .group-sep { display: grid; grid-template-columns: 210px 1fr; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid #e6e9ef; position: relative; z-index: 2; }
+  .group-sep.first { margin-top: 0; padding-top: 2px; border-top: none; }
+  .group-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding-right: 8px; }
+  .group-tag.doku { color: #75567c; }
+  .group-tag.wurf { color: #46727a; }
+  .group-tag.cad { color: #a86442; }
+  .row { display: grid; grid-template-columns: 210px repeat(12, 1fr); align-items: center; min-height: 28px; gap: 0; position: relative; z-index: 2; }
+  .row.cat { min-height: 34px; }
+  .label { padding: 3px 10px 3px 0; font-size: 13px; line-height: 1.25; }
   .label.cat { font-weight: 600; }
   .label.sub { font-size: 12px; color: #4a5261; padding-left: 12px; }
   .bar { height: 15px; border-radius: 4px; }
   .bar.cat { height: 22px; border-radius: 5px; }
-  .today { position: absolute; top: 34px; bottom: 34px; width: 2px; background: #d64545; z-index: 3; pointer-events: none; }
-  .today span { position: absolute; top: -14px; left: -46px; font-size: 10px; color: #d64545; font-weight: 600; white-space: nowrap; }
+  .break {
+    position: absolute;
+    top: 25px;
+    bottom: 25px;
+    left: calc(210px + ((100% - 210px) * (7 / 12)));
+    width: calc((100% - 210px) * (2 / 12));
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(226, 229, 234, 0.35),
+      rgba(226, 229, 234, 0.35) 6px,
+      rgba(241, 243, 246, 0.55) 6px,
+      rgba(241, 243, 246, 0.55) 12px
+    );
+    border-left: 1px dashed #c5cbd6;
+    border-right: 1px dashed #c5cbd6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .break span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7485;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 4px 6px;
+    border-radius: 4px;
+    line-height: 1.3;
+  }
+  .today { position: absolute; top: 25px; bottom: 25px; width: 2px; background: #d64545; z-index: 3; pointer-events: none; transform: translateX(-50%); }
 </style>
 </head>
 <body>
 <div class="wrap" style="max-width:none;">
   <div class="scroller">
     <div class="chart">
-      <div class="axis axis-top"><div class="cell"></div><div class="cell">W0</div><div class="cell">W1</div><div class="cell">W2</div><div class="cell">W3</div><div class="cell">W4</div><div class="cell">W5</div><div class="cell">W6</div><div class="cell">W7</div><div class="cell">W8</div><div class="cell">W9</div><div class="cell">W10</div><div class="cell">W11</div><div class="cell">W12</div></div>
+      <div class="legend">
+        <div class="legend-item">
+          <span class="swatches">
+            <span class="swatch" style="background:#8a6a91"></span>
+          </span>
+          <span>Organisation &amp; Doku</span>
+        </div>
+        <div class="legend-item">
+          <span class="swatches">
+            <span class="swatch" style="background:#6b7fa8"></span>
+            <span class="swatch" style="background:#4f8a8b"></span>
+            <span class="swatch" style="background:#588c6c"></span>
+          </span>
+          <span>Wurfmechanismus</span>
+        </div>
+        <div class="legend-item">
+          <span class="swatches">
+            <span class="swatch" style="background:#c29b48"></span>
+            <span class="swatch" style="background:#c97e4a"></span>
+            <span class="swatch" style="background:#c46250"></span>
+            <span class="swatch" style="background:#ad505a"></span>
+          </span>
+          <span>CAD &amp; Druck</span>
+        </div>
+      </div>
 
-      <div class="row cat"><div class="label cat">1. Setup &amp; Einarbeitung</div><div class="bar cat" style="grid-column:2 / 4;background:#6b7fa8"></div></div>
-      <div class="row sub"><div class="label sub">Git Setup</div><div class="bar sub" style="grid-column:2 / 3;background:#9aa9c6"></div></div>
-      <div class="row sub"><div class="label sub">URSim Setup</div><div class="bar sub" style="grid-column:2 / 4;background:#9aa9c6"></div></div>
-      <div class="row sub"><div class="label sub">Erste Versuche in URSim</div><div class="bar sub" style="grid-column:3 / 5;background:#9aa9c6"></div></div>
+      <div class="chart-body">
+        <div class="break"><span>Vorlesungsfreie<br>Zeit</span></div>
 
-      <div class="row cat"><div class="label cat">2. Physischer Roboter</div><div class="bar cat" style="grid-column:4 / 6;background:#4f8a8b"></div></div>
-      <div class="row sub"><div class="label sub">Inbetriebnahme am Roboter</div><div class="bar sub" style="grid-column:4 / 5;background:#88b4b5"></div></div>
-      <div class="row sub"><div class="label sub">Erste Versuche am Roboter</div><div class="bar sub" style="grid-column:5 / 6;background:#88b4b5"></div></div>
+        <div class="axis axis-top"><div class="cell">Woche</div><div class="cell">W1</div><div class="cell">W2</div><div class="cell">W3</div><div class="cell">W4</div><div class="cell">W5</div><div class="cell">W6</div><div class="cell">W7</div><div class="cell">W8</div><div class="cell">W9</div><div class="cell">W10</div><div class="cell">W11</div><div class="cell">W12</div></div>
 
-      <div class="row cat"><div class="label cat">3. Wurfbewegung</div><div class="bar cat" style="grid-column:5 / 9;background:#8a6a91"></div></div>
-      <div class="row sub"><div class="label sub">Wurfbewegung festlegen</div><div class="bar sub" style="grid-column:5 / 7;background:#b39ab8"></div></div>
-      <div class="row sub"><div class="label sub">Ball Aufnahme / Loslassen (Timing)</div><div class="bar sub" style="grid-column:6 / 8;background:#b39ab8"></div></div>
-      <div class="row sub"><div class="label sub">Zielposition festlegen (Austausch)</div><div class="bar sub" style="grid-column:7 / 9;background:#b39ab8"></div></div>
+        <!-- Segment 1: Organisation & Doku -->
+        <div class="group-sep first"><div class="group-tag doku">Organisation &amp; Doku</div><div></div></div>
 
-      <div class="row cat"><div class="label cat">4. Test &amp; Optimierung</div><div class="bar cat" style="grid-column:9 / 15;background:#b8894a"></div></div>
-      <div class="row sub"><div class="label sub">Erste Wurfversuche (ca. 1,5 m)</div><div class="bar sub" style="grid-column:9 / 12;background:#d4b184"></div></div>
-      <div class="row sub"><div class="label sub">Optimierung</div><div class="bar sub" style="grid-column:11 / 15;background:#d4b184"></div></div>
-      <div class="row sub"><div class="label sub">Finale Dokumentation &amp; Abgabe</div><div class="bar sub" style="grid-column:12 / 15;background:#d4b184"></div></div>
+        <div class="row cat"><div class="label cat">1. Dokumentation</div><div class="bar cat" style="grid-column:2 / 14;background:#8a6a91"></div></div>
+        <div class="row sub"><div class="label sub">Git Setup</div><div class="bar sub" style="grid-column:2 / 3;background:#b39ab8"></div></div>
+        <div class="row sub"><div class="label sub">GitHub Struktur Setup</div><div class="bar sub" style="grid-column:2 / 3;background:#b39ab8"></div></div>
+        <div class="row sub"><div class="label sub">Gantt Chart erstellen</div><div class="bar sub" style="grid-column:4 / 5;background:#b39ab8"></div></div>
+        <div class="row sub"><div class="label sub">Finale Dokumentation</div><div class="bar sub" style="grid-column:12 / 14;background:#b39ab8"></div></div>
 
-      <div class="axis axis-bottom"><div class="cell"></div><div class="cell">28.10.</div><div class="cell">04.11.</div><div class="cell">11.11.</div><div class="cell">18.11.</div><div class="cell">25.11.</div><div class="cell">02.12.</div><div class="cell">09.12.</div><div class="cell">16.12.</div><div class="cell">23.12.</div><div class="cell">30.12.</div><div class="cell">06.01.</div><div class="cell">13.01.</div><div class="cell">20.01.</div></div>
+        <!-- Segment 2: Wurfmechanismus -->
+        <div class="group-sep"><div class="group-tag wurf">Wurfmechanismus</div><div></div></div>
 
-      <div class="today" id="today"><span>heute</span></div>
+        <div class="row cat"><div class="label cat">2. Einarbeitung</div><div class="bar cat" style="grid-column:2 / 7;background:#6b7fa8"></div></div>
+        <div class="row sub"><div class="label sub">URSim Setup</div><div class="bar sub" style="grid-column:2 / 3;background:#9aa9c6"></div></div>
+        <div class="row sub"><div class="label sub">Git Einarbeitung</div><div class="bar sub" style="grid-column:3 / 4;background:#9aa9c6"></div></div>
+        <div class="row sub"><div class="label sub">CAD Einarbeitung</div><div class="bar sub" style="grid-column:4 / 5;background:#9aa9c6"></div></div>
+        <div class="row sub"><div class="label sub">3D-Druck Einarbeitung</div><div class="bar sub" style="grid-column:6 / 7;background:#9aa9c6"></div></div>
+
+        <div class="row cat"><div class="label cat">3. Arbeit mit Roboter</div><div class="bar cat" style="grid-column:2 / 9;background:#4f8a8b"></div></div>
+        <div class="row sub"><div class="label sub">Erste Versuche in URSim</div><div class="bar sub" style="grid-column:2 / 3;background:#88b4b5"></div></div>
+        <div class="row sub"><div class="label sub">Erste Versuche am Roboter</div><div class="bar sub" style="grid-column:3 / 4;background:#88b4b5"></div></div>
+        <div class="row sub"><div class="label sub">Zielposition festlegen (Austausch)</div><div class="bar sub" style="grid-column:4 / 7;background:#88b4b5"></div></div>
+        <div class="row sub"><div class="label sub">Wurfbewegung festlegen</div><div class="bar sub" style="grid-column:4 / 8;background:#88b4b5"></div></div>
+        <div class="row sub"><div class="label sub">Ball Aufnahme / Loslassen (Timing)</div><div class="bar sub" style="grid-column:5 / 9;background:#88b4b5"></div></div>
+
+        <div class="row cat"><div class="label cat">4. Test &amp; Optimierung</div><div class="bar cat" style="grid-column:11 / 14;background:#588c6c"></div></div>
+        <div class="row sub"><div class="label sub">Optimierung (3 Kategorien)</div><div class="bar sub" style="grid-column:11 / 13;background:#8eb89e"></div></div>
+        <div class="row sub"><div class="label sub">Abgabe</div><div class="bar sub" style="grid-column:13 / 14;background:#8eb89e"></div></div>
+
+        <!-- Segment 3: CAD & Druck -->
+        <div class="group-sep"><div class="group-tag cad">CAD &amp; Druck</div><div></div></div>
+
+        <div class="row cat"><div class="label cat">5. Höhenverstellung</div><div class="bar cat" style="grid-column:2 / 10;background:#c29b48"></div></div>
+        <div class="row sub"><div class="label sub">Konzept für modulare Stapelung</div><div class="bar sub" style="grid-column:2 / 3;background:#dec182"></div></div>
+        <div class="row sub"><div class="label sub">CAD Modell</div><div class="bar sub" style="grid-column:2 / 3;background:#dec182"></div></div>
+        <div class="row sub"><div class="label sub">Druck</div><div class="bar sub" style="grid-column:6 / 10;background:#dec182"></div></div>
+
+        <div class="row cat"><div class="label cat">6. Auffangsystem</div><div class="bar cat" style="grid-column:3 / 10;background:#c97e4a"></div></div>
+        <div class="row sub"><div class="label sub">Konstruktion eines Auffangsystems</div><div class="bar sub" style="grid-column:3 / 5;background:#e2aa83"></div></div>
+        <div class="row sub"><div class="label sub">CAD Modell</div><div class="bar sub" style="grid-column:4 / 6;background:#e2aa83"></div></div>
+        <div class="row sub"><div class="label sub">Druck</div><div class="bar sub" style="grid-column:6 / 10;background:#e2aa83"></div></div>
+
+        <div class="row cat"><div class="label cat">7. Ziel</div><div class="bar cat" style="grid-column:3 / 10;background:#c46250"></div></div>
+        <div class="row sub"><div class="label sub">Konzept eines Ziels um die Kugel optimal zu stoppen</div><div class="bar sub" style="grid-column:3 / 5;background:#de9487"></div></div>
+        <div class="row sub"><div class="label sub">CAD Modell</div><div class="bar sub" style="grid-column:4 / 6;background:#de9487"></div></div>
+        <div class="row sub"><div class="label sub">Druck</div><div class="bar sub" style="grid-column:6 / 10;background:#de9487"></div></div>
+
+        <div class="row cat"><div class="label cat">8. Bahn</div><div class="bar cat" style="grid-column:3 / 12;background:#ad505a"></div></div>
+        <div class="row sub"><div class="label sub">Konzept</div><div class="bar sub" style="grid-column:3 / 5;background:#cf8890"></div></div>
+        <div class="row sub"><div class="label sub">Anschluss zum Auffangsystem</div><div class="bar sub" style="grid-column:4 / 5;background:#cf8890"></div></div>
+        <div class="row sub"><div class="label sub">Fertigung</div><div class="bar sub" style="grid-column:9 / 12;background:#cf8890"></div></div>
+
+        <div class="axis axis-bottom"><div class="cell">Meeting/Dienstag</div><div class="cell">03.11.</div><div class="cell">10.11.</div><div class="cell">17.11.</div><div class="cell">24.11.</div><div class="cell">01.12.</div><div class="cell">08.12.</div><div class="cell">15.12.</div><div class="cell">22.12.</div><div class="cell">29.12.</div><div class="cell">05.01.</div><div class="cell">12.01.</div><div class="cell">19.01.</div></div>
+
+        <div class="today" id="today"></div>
+      </div>
     </div>
   </div>
   <script>
-    document.getElementById("today").style.left = 'calc(170px + ((100% - 170px) * (19 / 91)))';
+    (function () {
+      const start = new Date(2026, 10, 2); // Mo, 02.11.2026 (Start W1)
+      const end = new Date(2027, 0, 25);   // Mo, 25.01.2027 (Ende W12, genau 84 Tage)
+      const now = new Date();
+      const todayEl = document.getElementById("today");
+
+      const ratio = (now - start) / (end - start);
+      if (ratio < 0 || ratio > 1) {
+        todayEl.style.display = "none";
+      } else {
+        todayEl.style.left = `calc(210px + ((100% - 210px) * ${ratio}))`;
+      }
+    })();
   </script>
 </div>
 </body>
